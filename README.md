@@ -70,6 +70,39 @@ prompt-app/
    npm test
    ```
 
+## Security
+
+This project includes automated security scanning and dependency management:
+
+### Automated Checks
+
+- Daily security audits via GitHub Actions
+- Snyk vulnerability scanning on PRs and main branch
+- Dependency updates monitoring
+
+### Local Security Commands
+
+```bash
+# Run security audit and check outdated dependencies
+npm run security-check
+
+# Automatically fix security issues
+npm run security-fix
+
+# Check for available dependency updates
+npm run deps-check
+
+# Update all dependencies to their latest versions
+npm run deps-update
+```
+
+### Security Best Practices
+
+1. Regular dependency updates
+2. Automated vulnerability scanning
+3. Package version pinning via overrides
+4. Continuous monitoring via GitHub Actions
+
 ## Available Scripts
 
 - `npm start` - Runs the development server

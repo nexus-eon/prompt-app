@@ -1,0 +1,45 @@
+name: Security Audit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run security audit
+        run: |
+          npm audit
+          if [ $? -eq 0 ]; then
+            echo "No vulnerabilities found"
+          else
+            npm audit fix --force
+            git config --global user.name 'GitHub Action'
+            git config --global user.email 'action@github.com'
+            git add package*.json
+            git commit -m "fix: security vulnerabilities from npm audit" || echo "No changes to commit"
+            git push || echo "No changes to push"
+          fi
+        
+      - name: Run Snyk security scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high

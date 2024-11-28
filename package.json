@@ -27,7 +27,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "security-check": "npm audit && npm outdated",
+    "security-fix": "npm audit fix --force",
+    "deps-check": "npx npm-check-updates",
+    "deps-update": "npx npm-check-updates -u && npm install"
   },
   "eslintConfig": {
     "extends": [
