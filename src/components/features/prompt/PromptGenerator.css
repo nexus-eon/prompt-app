@@ -1,0 +1,81 @@
+.prompt-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.prompt-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.prompt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #fee2e2;
+  border-radius: 0.375rem;
+}
+
+.result-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8fafc;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.result-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.result-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 0.375rem;
+  border: 1px solid #e5e7eb;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .prompt-container {
+    padding: 1rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .result-content {
+    font-size: 0.8125rem;
+  }
+}
