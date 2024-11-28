@@ -49,7 +49,7 @@
 
 ## Expected Final Structure
 
-```
+```text
 src/
 ├── assets/             ✅
 │   ├── images/        ✅
@@ -85,7 +85,6 @@ tests/
 2. Create Modal component
 3. Create Card component
 4. Create Form component
-
-2. Add integration tests
-3. Implement prompt history feature
-4. Add user preferences
+5. Add integration tests
+6. Implement prompt history feature
+7. Add user preferences

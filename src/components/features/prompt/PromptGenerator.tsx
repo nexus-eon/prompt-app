@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Button, Input, Select, LoadingSpinner } from '../../common';
+import { Button, Input, Select } from '../../common';
 import { generatePrompt } from '../../../utils/promptGenerator';
 import { OpenAIService } from '../../../services/ai/openai';
 import { ENV } from '../../../config/env';
 import { availableModels } from '../../../config/models';
+import { PromptTone } from '../../../types';
 import './PromptGenerator.css';
 
 /**
@@ -55,8 +56,8 @@ export function PromptGenerator() {
   // Form state
   const [instruction, setInstruction] = useState('');
   const [context, setContext] = useState('');
-  const [tone, setTone] = useState('casual');
-  const [model, setModel] = useState(modelOptions[0].value);
+  const [tone, setTone] = useState<PromptTone>('casual');
+  const [selectedModel, setSelectedModel] = useState(modelOptions[0].value);
 
   // Result state
   const [generatedPrompt, setGeneratedPrompt] = useState('');
@@ -66,10 +67,11 @@ export function PromptGenerator() {
 
   /**
    * Handles AI model selection and updates the OpenAI service
-   * @param modelId - The ID of the selected model
+   * @param event - The event triggered by the model selection change
    */
-  const handleModelChange = (modelId: string) => {
-    setModel(modelId);
+  const handleModelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const modelId = event.target.value;
+    setSelectedModel(modelId);
     if (openAIService) {
       try {
         openAIService.setModel(modelId);
@@ -131,6 +133,10 @@ export function PromptGenerator() {
     }
   };
 
+  const handleToneChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setTone(event.target.value as PromptTone);
+  };
+
   return (
     <div className="prompt-container">
       <h1 className="prompt-title">AI Prompt Generator</h1>
@@ -139,7 +145,7 @@ export function PromptGenerator() {
         <Select
           label="AI Model"
           options={modelOptions}
-          value={model}
+          value={selectedModel}
           onChange={handleModelChange}
         />
 
@@ -166,7 +172,7 @@ export function PromptGenerator() {
           label="Tone"
           options={toneOptions}
           value={tone}
-          onChange={setTone}
+          onChange={handleToneChange}
         />
 
         <div className="button-group">

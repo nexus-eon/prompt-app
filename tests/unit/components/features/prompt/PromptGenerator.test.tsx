@@ -1,17 +1,24 @@
+import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { PromptGenerator } from '../../../../../src/components/features/prompt/PromptGenerator';
-import { OpenAIService } from '../../../../../src/services/OpenAIService';
+import { OpenAIService } from '../../../../../src/services/ai/openai';
 
-// Mock OpenAIService
-jest.mock('../../../../../src/services/OpenAIService');
-const mockOpenAIService = OpenAIService as jest.Mocked<typeof OpenAIService>;
+// Create a mock class
+class MockOpenAIService {
+  static improvePrompt = jest.fn();
+}
+
+// Mock the module
+jest.mock('../../../../../src/services/ai/openai', () => ({
+  OpenAIService: MockOpenAIService
+}));
 
 describe('PromptGenerator', () => {
   beforeEach(() => {
-    // Clear all mocks before each test
-    jest.clearAllMocks();
+    // Clear mock before each test
+    MockOpenAIService.improvePrompt.mockClear();
     // Reset ENV mock
     (global as any).ENV.GLHF_API_KEY = 'test-api-key';
   });
@@ -60,7 +67,7 @@ describe('PromptGenerator', () => {
 
   it('handles AI improvement successfully', async () => {
     // Mock the OpenAI service improvePrompt method
-    mockOpenAIService.improvePrompt.mockResolvedValueOnce(
+    MockOpenAIService.improvePrompt.mockResolvedValueOnce(
       'Improved prompt content'
     );
 
@@ -83,7 +90,7 @@ describe('PromptGenerator', () => {
 
   it('handles AI improvement error', async () => {
     // Mock the OpenAI service to throw an error
-    mockOpenAIService.improvePrompt.mockRejectedValueOnce(
+    MockOpenAIService.improvePrompt.mockRejectedValueOnce(
       new Error('API error')
     );
 
@@ -103,7 +110,7 @@ describe('PromptGenerator', () => {
 
   it('handles rate limit errors with retry count', async () => {
     // Mock the OpenAI service to throw a rate limit error
-    mockOpenAIService.improvePrompt.mockRejectedValueOnce(
+    MockOpenAIService.improvePrompt.mockRejectedValueOnce(
       new Error('rate limit exceeded')
     );
 

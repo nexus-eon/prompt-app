@@ -11,28 +11,25 @@ export interface SelectOption {
 export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
   label?: string;
   options: SelectOption[];
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   error?: string;
-  // Make onChange more type-safe by explicitly defining the value type
-  onChange?: (value: string) => void;
+  disabled?: boolean;
 }
 
 export const Select: React.FC<SelectProps> = ({
   label,
   options,
-  error,
-  className = '',
-  onChange,
   value,
+  onChange,
+  error,
+  disabled = false,
+  className = '',
   id,
   ...props
 }) => {
   // Generate an ID from the label if none provided
   const selectId = id || label?.toLowerCase().replace(/\s+/g, '-');
-
-  // Handle change events
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange?.(event.target.value);
-  };
 
   return (
     <div className="select-container">
@@ -47,8 +44,9 @@ export const Select: React.FC<SelectProps> = ({
       <select
         id={selectId}
         className={`select ${error ? 'select-error' : ''} ${className}`.trim()}
-        onChange={handleChange}
+        onChange={onChange}
         value={value}
+        disabled={disabled}
         {...props}
       >
         {/* Map through options to create option elements */}

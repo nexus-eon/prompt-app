@@ -6,7 +6,9 @@ export const ComponentExamples: React.FC = () => {
   // State for form inputs
   const [inputValue, setInputValue] = useState('');
   const [textareaValue, setTextareaValue] = useState('');
-  const [selectValue, setSelectValue] = useState('option1');
+  const [selectValue1, setSelectValue1] = useState('option1');
+  const [selectValue2, setSelectValue2] = useState('');
+  const [selectValue3, setSelectValue3] = useState('option2');
   const [showLoading, setShowLoading] = useState(false);
 
   // Example options for Select
@@ -20,6 +22,18 @@ export const ComponentExamples: React.FC = () => {
   const handleLoadingClick = () => {
     setShowLoading(true);
     setTimeout(() => setShowLoading(false), 2000); // Reset after 2 seconds
+  };
+
+  const handleSelectChange1 = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectValue1(event.target.value);
+  };
+
+  const handleSelectChange2 = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectValue2(event.target.value);
+  };
+
+  const handleSelectChange3 = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectValue3(event.target.value);
   };
 
   return (
@@ -71,24 +85,24 @@ export const ComponentExamples: React.FC = () => {
         <h2>Selects</h2>
         <div className="example-grid">
           <Select
-            label="Simple Select"
+            label="Basic Select"
             options={selectOptions}
-            value={selectValue}
-            onChange={setSelectValue}
-          />
-          <Select
-            label="Disabled Select"
-            options={selectOptions}
-            value={selectValue}
-            onChange={setSelectValue}
-            disabled
+            value={selectValue1}
+            onChange={handleSelectChange1}
           />
           <Select
             label="Select with Error"
             options={selectOptions}
-            value={selectValue}
-            onChange={setSelectValue}
-            error="This is an error message"
+            value={selectValue2}
+            onChange={handleSelectChange2}
+            error="Please select an option"
+          />
+          <Select
+            label="Disabled Select"
+            options={selectOptions}
+            value={selectValue3}
+            onChange={handleSelectChange3}
+            disabled
           />
         </div>
       </section>

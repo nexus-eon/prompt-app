@@ -1,16 +1,14 @@
 import React from 'react';
+import { ThemeProvider } from '../../contexts';
+import HomePage from '../../pages';
 import './App.css';
-import { ComponentExamples } from '../examples/ComponentExamples';
-import { PromptGenerator } from '../features/prompt/PromptGenerator';
 
-function App() {
+export const App: React.FC = () => {
   return (
-    <div className="app">
-      <ComponentExamples />
-      <hr className="divider" />
-      <PromptGenerator />
-    </div>
+    <ThemeProvider>
+      <div className="App">
+        <HomePage />
+      </div>
+    </ThemeProvider>
   );
-}
-
-export default App;
+};
